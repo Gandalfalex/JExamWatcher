@@ -1,6 +1,6 @@
 import subprocess as sub
 from time import sleep
-import web_hook
+from WebHock.web_hook import run_app
 import requests
 
 def open_ngrok():
@@ -23,6 +23,6 @@ def open_ngrok():
 if __name__ == "__main__":
     if open_ngrok():
         sleep(20)
-        web_hook.run_app()
+        run_app()
     
 
