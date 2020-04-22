@@ -1,9 +1,6 @@
-from telegram import Bot
 import requests
-from config import TOKEN, TELEGRAM_SEND_MESSAGE_URL, TELEGRAM_INIT_WEBHOOK_URL
-from time import sleep
+from .config import TOKEN, TELEGRAM_SEND_MESSAGE_URL, TELEGRAM_INIT_WEBHOOK_URL
 import json
-import messages
 
 
 class TelegramBot:
@@ -16,20 +13,8 @@ class TelegramBot:
         if reply:
             success = self.send_message(original_message.replace(',','') + " has just been released", id)
         else:
-            success = self.send_message(self.create_message(original_message, name), id)
+            success = self.send_message(original_message, id)
         return success
-
-    def create_message(self, msg, name):
-        if str(msg).lower() == "/start":
-            return "Hello "+ name + "\n" + messages.GREETING
-        elif str(msg).lower() == "/help":
-            return messages.HELP
-        elif str(msg).lower() == "/whoisyourdaddy":
-            return messages.DADDY
-        elif str(msg).lower() == "/remove":
-            return messages.REMOVE
-        else:
-            return msg
 
     def send_message(self, message, id):
         res = requests.get(TELEGRAM_SEND_MESSAGE_URL.format(id, message))
